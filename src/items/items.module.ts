@@ -4,6 +4,6 @@ import { ItemsService } from './items.service';
 
 @Module({
   controllers: [ItemsController],
-  providers: [ItemsService] // DI対象として登録
+  providers: [ItemsService], // DI対象として登録
 })
 export class ItemsModule {}
