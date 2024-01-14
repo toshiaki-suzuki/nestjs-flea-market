@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { ItemStatus } from "../item-status.enum";
+import { ItemStatus } from "../items/item-status.enum";
 
 @Entity()
 export class Item {
