@@ -13,4 +13,6 @@ const dbConfig = require("../ormconfig.js");
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
