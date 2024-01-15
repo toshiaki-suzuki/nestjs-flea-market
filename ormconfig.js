@@ -6,6 +6,7 @@ module.exports = {
   password: 'postgres',
   database: 'postgres',
   autoLoadEntities: true, // エンティティの自動読み込み
+  synchronize: true, // スキーマの自動同期
   entities: ['dist/entities/*.entity.js'], // エンティティファイルの読み込み
   migrations: ['dist/migrations/*.js'], // マイグレーションファイルの読み込み
   cli: {

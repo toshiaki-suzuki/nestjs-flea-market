@@ -3,9 +3,17 @@ import { EntityRepository, Repository } from "typeorm";
 import { CreateItemDto } from "./dto/create-item.dto";
 import { ItemStatus } from "./item-status.enum";
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 
-@Injectable() // 引数はエンティティを指定、モデルではない
+@Injectable()
 export class ItemRepository extends Repository<Item> {
+  constructor(
+    @InjectRepository(Item)
+    private readonly repository: Repository<Item>
+  ) { 
+    super(Item, repository.manager);
+  }
+
   // DB操作は非同期で行うので、asyncをつける
   async createItem(createItemDto: CreateItemDto): Promise<Item> {
     const { name, price, description } = createItemDto;

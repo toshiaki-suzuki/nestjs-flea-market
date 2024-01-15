@@ -3,10 +3,14 @@ import { Item } from '../entities/item.entity';
 import { ItemStatus } from './item-status.enum';
 import { CreateItemDto } from './dto/create-item.dto';
 import { ItemRepository } from './item.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable() // DI対象として登録するためのデコレータ
 export class ItemsService {
-	constructor(private readonly itemRepository: ItemRepository) {}
+	constructor(
+		private readonly itemRepository: ItemRepository
+	) {}
+	
 	private items: Item[] = [];
 
 	findAll(): Item[]{

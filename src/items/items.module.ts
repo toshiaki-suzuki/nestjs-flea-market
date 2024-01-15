@@ -9,6 +9,7 @@ import { Item } from '../entities/item.entity';
   // 他モジュールのエクスポートされたモジュールをインポート
   imports: [TypeOrmModule.forFeature([Item])], 
   controllers: [ItemsController],
-  providers: [ItemsService], // DI対象として登録
+  providers: [ItemsService, ItemRepository], // DI対象として登録
+  exports: [TypeOrmModule] // 他モジュールで利用できるようにする
 })
 export class ItemsModule {}
