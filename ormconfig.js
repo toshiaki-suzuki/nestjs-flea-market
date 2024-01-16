@@ -1,16 +1,14 @@
-module.exports = {
+const { DataSource } = require('typeorm');
+
+module.exports = new DataSource({
   type: 'postgres',
   host: 'localhost',
   port: 15432,
   username: 'postgres',
   password: 'postgres',
   database: 'postgres',
-  autoLoadEntities: true, // エンティティの自動読み込み
-  synchronize: true, // スキーマの自動同期
-  entities: ['dist/entities/*.entity.js'], // エンティティファイルの読み込み
-  migrations: ['dist/migrations/*.js'], // マイグレーションファイルの読み込み
-  cli: {
-    entitiesDir: 'src/entities', // エンティティファイルの出力先ディレクトリ
-    migrationsDir: 'src/migrations' // マイグレーションファイルの出力先ディレクトリ
-  }
-}
+  entities: ['dist/entities/*.entity.js'],
+  migrations: ['dist/migrations/*.js'],
+  synchronize: true,
+  autoLoadEntities: true,
+});
