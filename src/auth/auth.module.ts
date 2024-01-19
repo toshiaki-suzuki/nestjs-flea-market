@@ -2,25 +2,26 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepository } from './user.repository';
+import { User } from '../entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
-  imports:[
-    TypeOrmModule.forFeature([UserRepository]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),  // デフォルトの認証方法をJWTに設定
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'secret123',
+      secret: 'secretKey123',
       signOptions: {
-        expiresIn: 3600,  // 1時間
+        expiresIn: 3600,
       },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard],
-  exports: [JwtStrategy, JwtAuthGuard],  // JwtStrategyを他のモジュールから使えるようにする
+  providers: [AuthService, JwtStrategy, JwtAuthGuard, RolesGuard],
+  exports: [JwtStrategy, JwtAuthGuard, RolesGuard],
 })
 export class AuthModule {}

@@ -1,11 +1,11 @@
-version: '3.8'
+version: '3.7'
 services:
 
   postgres:
-    image: postgres:14.2-alpine
+    image: postgres:12.2-alpine
     container_name: postgres
     ports:
-      - 15432:5432
+      - 5432:5432
     volumes:
       - ./docker/postgres/init.d:/docker-entrypoint-initdb.d
       - ./docker/postgres/pgdata:/var/lib/postgresql/data
@@ -30,4 +30,3 @@ services:
       - ./docker/pgadmin:/var/lib/pgadmin
     depends_on:
       - postgres
-    user: root

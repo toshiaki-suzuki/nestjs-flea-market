@@ -1,22 +1,27 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { ExtractJwt, Strategy } from "passport-jwt";
-import { UserRepository } from "./user.repository";
-import { User } from "src/entities/user.entity";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { User } from '../entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private userRepository: UserRepository) {
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // RequestのどこにJWTがあるかを指定
-      ignoreExpiration: false, // JWTの有効期限を確認するかどうか,
-      secretOrKey: 'secretKey123' // JWTの署名に使うキー
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: 'secretKey123',
     });
   }
 
-  async validate(payload: {id: string, username: string}): Promise<User> {
+  async validate(payload: { id: string; username: string }): Promise<User> {
     const { id, username } = payload;
-    const user = await this.userRepository.findOne({ where: { id, username } });
+    const user = await this.userRepository.findOneBy({ id, username });
+
     if (user) {
       return user;
     }

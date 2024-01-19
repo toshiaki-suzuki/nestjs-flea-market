@@ -34,5 +34,7 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# docker
-/docker
+# Docker
+docker/postgres/*
+docker/pgadmin/*
+!docker/postgres/init.d
